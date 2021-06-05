@@ -67,16 +67,27 @@ func (f *File) createNewNote() {
 
 // opeFile simply opens a file in neovim when not in use
 func (f *File) openFile() {
+
+	// Get the current directory and move to notes folder
+	currentDir, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	os.Chdir(f.config.folder)
+
 	// prepare the command
-	cmd := exec.Command(f.config.vimPath, f.path)
+	cmd := exec.Command(path.Base(f.config.vimPath), f.path)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 
 	// Run the command
-	err := cmd.Run()
+	err = cmd.Run()
 	if err != nil {
 		panic(err)
 	}
+
+	// Go back to the original directory `notable` has been run from
+	os.Chdir(currentDir)
 }
 
 // getDate returns the current date formatted like YYYY-MM-DD
