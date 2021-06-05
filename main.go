@@ -10,8 +10,10 @@ import (
 
 // Config holds the configuration for notable
 type Config struct {
-	folder  string // folder to notes
-	vimPath string // path to vim on local machine
+	// folder to notes
+	folder string
+	// path to vim on local machine
+	vimPath string
 }
 
 // NewConfig creates a Config
